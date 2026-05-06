@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedai Danieal</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
+        .produk { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; shadow: 2px 2px 5px #ccc; }
+        button { background: #25D366; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
+        #cart { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 20px; border-top: 2px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <h2>Katalog Produk</h2>
+    
+    <div class="produk">
+        <h3>Kaftan Poly Lembut (4XL)</h3>
+        <p>Harga: RM 45</p>
+        <button onclick="tambahKeBakul('Kaftan Poly 4XL', 45)">Tambah ke Bakul</button>
+    </div>
+
+    <div class="produk">
+        <h3>Perfume Wangi</h3>
+        <p>Harga: RM 30</p>
+        <button onclick="tambahKeBakul('Perfume Wangi', 30)">Tambah ke Bakul</button>
+    </div>
+
+    <div id="cart">
+        <strong>Total: RM <span id="total">0</span></strong>
+        <button onclick="hantarWhatsApp()" style="float: right;">Beli Sekarang (WhatsApp)</button>
+    </div>
+
+    <script>
+        let bakul = [];
+        let jumlah = 0;
+
+        function tambahKeBakul(nama, harga) {
+            bakul.push(nama + " (RM" + harga + ")");
+            jumlah += harga;
+            document.getElementById('total').innerText = jumlah;
+            alert(nama + " masuk bakul!");
+        }
+      
+        function hantarWhatsApp() {
+            if (bakul.length == 0) return alert("Bakul kosong!");
+            
+            let noPhone = "601137724067"; // TUKAR NOMBOR ANDA DI SINI
+            let mesej = "Salam Danieal, saya nak order:\n\n" + bakul.join("\n") + "\n\n*Total: RM" + jumlah + "*";
+            let url = "https://wa.me/" + noPhone + "?text=" + encodeURIComponent(mesej);
+            window.open(url);
+        }
+    </script>
+</body>
+</html>
