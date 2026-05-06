@@ -1,52 +1,244 @@
 <!DOCTYPE html>
-<html>
+<html lang="ms">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kedai Danieal</title>
+    <title>Danieal Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; padding: 20px; background: #f4f4f4; }
-        .produk { background: white; padding: 15px; margin-bottom: 10px; border-radius: 8px; shadow: 2px 2px 5px #ccc; }
-        button { background: #25D366; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; }
-        #cart { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 20px; border-top: 2px solid #ddd; }
+        :root {
+            --primary: #2563eb; /* Warna tema biru premium */
+            --whatsapp: #25D366;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: var(--bg); 
+            margin: 0; 
+            padding: 0;
+            padding-bottom: 90px;
+            color: var(--text);
+        }
+
+        /* Header Profesional */
+        header {
+            background: var(--card);
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        
+        header h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: 1px; }
+        header p { margin: 5px 0 0; font-size: 14px; color: #6b7280; }
+
+        .container { padding: 0 15px; }
+
+        /* Grid Produk */
+        .katalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        .produk { 
+            background: var(--card); 
+            border-radius: 16px; 
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .gambar-produk {
+            width: 100%;
+            height: 160px;
+            background-color: #e5e7eb;
+            object-fit: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .info-produk { padding: 15px; }
+        .info-produk h3 { font-size: 15px; margin: 0 0 8px; font-weight: 600; line-height: 1.3; }
+        .info-produk p { color: var(--primary); font-weight: 700; font-size: 16px; margin: 0 0 15px; }
+
+        button.tambah { 
+            background: var(--text); 
+            color: white; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 10px; 
+            font-weight: 600;
+            font-size: 13px;
+            width: 100%;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.3s;
+        }
+
+        /* Floating Cart (Kelihatan macam app sebenar) */
+        #cart { 
+            position: fixed; 
+            bottom: 15px; 
+            left: 15px; 
+            right: 15px; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 15px 20px; 
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .cart-info { display: flex; flex-direction: column; }
+        .cart-title { font-size: 12px; color: #6b7280; font-weight: 600; }
+        .jumlah-teks { font-size: 18px; font-weight: 700; color: var(--primary); }
+        
+        button.beli {
+            background: var(--whatsapp);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Notifikasi Cantik (Toast) */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 30px;
+            padding: 12px 20px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 90px;
+            transform: translateX(-50%);
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 100px;
+        }
     </style>
 </head>
 <body>
 
-    <h2>Katalog Produk</h2>
+    <header>
+        <h1>Danieal Store</h1>
+        <p>Pilihan Eksklusif & Kualiti Premium</p>
+    </header>
     
-    <div class="produk">
-        <h3>Kaftan Poly Lembut (4XL)</h3>
-        <p>Harga: RM 45</p>
-        <button onclick="tambahKeBakul('Kaftan Poly 4XL', 45)">Tambah ke Bakul</button>
+    <div class="container">
+        <div class="katalog">
+            <div class="produk">
+                <img src="" alt="Kaftan Poly" class="gambar-produk" onerror="this.outerHTML='<div class=\'gambar-produk\'>[Letak Gambar Kaftan]</div>'">
+                <div class="info-produk">
+                    <h3>Kaftan Poly Lembut (Sehingga 4XL)</h3>
+                    <p>RM 45.00</p>
+                    <button class="tambah" onclick="tambahKeBakul('Kaftan Poly Lembut', 45, this)">Tambah ke Bakul</button>
+                </div>
+            </div>
+
+            <div class="produk">
+                <img src="" alt="Perfume" class="gambar-produk" onerror="this.outerHTML='<div class=\'gambar-produk\'>[Letak Gambar Perfume]</div>'">
+                <div class="info-produk">
+                    <h3>Premium Perfume (30ml)</h3>
+                    <p>RM 30.00</p>
+                    <button class="tambah" onclick="tambahKeBakul('Premium Perfume', 30, this)">Tambah ke Bakul</button>
+                </div>
+            </div>
+            
+            <div class="produk">
+                <img src="" alt="Snek" class="gambar-produk" onerror="this.outerHTML='<div class=\'gambar-produk\'>[Letak Gambar Snek]</div>'">
+                <div class="info-produk">
+                    <h3>Snek Ranggup Viral</h3>
+                    <p>RM 15.00</p>
+                    <button class="tambah" onclick="tambahKeBakul('Snek Ranggup', 15, this)">Tambah ke Bakul</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="produk">
-        <h3>Perfume Wangi</h3>
-        <p>Harga: RM 30</p>
-        <button onclick="tambahKeBakul('Perfume Wangi', 30)">Tambah ke Bakul</button>
-    </div>
+    <div id="toast">Berjaya dimasukkan ke bakul! 🛒</div>
 
     <div id="cart">
-        <strong>Total: RM <span id="total">0</span></strong>
-        <button onclick="hantarWhatsApp()" style="float: right;">Beli Sekarang (WhatsApp)</button>
+        <div class="cart-info">
+            <span class="cart-title">Jumlah Pesanan</span>
+            <span class="jumlah-teks">RM <span id="total">0.00</span></span>
+        </div>
+        <button class="beli" onclick="hantarWhatsApp()">Checkout ➔</button>
     </div>
 
     <script>
         let bakul = [];
         let jumlah = 0;
 
-        function tambahKeBakul(nama, harga) {
-            bakul.push(nama + " (RM" + harga + ")");
-            jumlah += harga;
-            document.getElementById('total').innerText = jumlah;
-            alert(nama + " masuk bakul!");
+        function tunjukToast(mesej) {
+            let toast = document.getElementById("toast");
+            toast.innerText = mesej;
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2500);
         }
-      
-        function hantarWhatsApp() {
-            if (bakul.length == 0) return alert("Bakul kosong!");
+
+        function tambahKeBakul(nama, harga, btn) {
+            bakul.push("▪️ " + nama + " (RM " + harga.toFixed(2) + ")");
+            jumlah += harga;
+            document.getElementById('total').innerText = jumlah.toFixed(2);
             
-            let noPhone = "601137724067"; // TUKAR NOMBOR ANDA DI SINI
-            let mesej = "Salam Danieal, saya nak order:\n\n" + bakul.join("\n") + "\n\n*Total: RM" + jumlah + "*";
+            // Effect butang
+            let teksAsal = btn.innerText;
+            btn.innerText = "✓ Tersimpan";
+            btn.style.background = "#2563eb";
+            
+            tunjukToast(nama + " ditambah! 🛒");
+
+            setTimeout(() => {
+                btn.innerText = teksAsal;
+                btn.style.background = "var(--text)";
+            }, 1500);
+        }
+
+        function hantarWhatsApp() {
+            if (bakul.length == 0) {
+                tunjukToast("Bakul anda kosong! ❌");
+                return;
+            }
+            
+            let noPhone = "601XXXXXXXX"; // TUKAR KEPADA NOMBOR ANDA
+            
+            let tajuk = "*PESANAN BARU (DANIEAL STORE)*\n";
+            let garisan = "------------------------\n";
+            let senarai = bakul.join("\n") + "\n";
+            let totalSemua = garisan + "*JUMLAH: RM " + jumlah.toFixed(2) + "*\n" + garisan;
+            
+            let mesej = tajuk + garisan + senarai + totalSemua + "\nSila berikan butiran pos:\nNama:\nAlamat:\nNo Tel:";
+            
             let url = "https://wa.me/" + noPhone + "?text=" + encodeURIComponent(mesej);
             window.open(url);
         }
