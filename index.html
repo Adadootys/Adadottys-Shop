@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb; /* Warna tema biru premium */
+            --primary: #2563eb;
             --whatsapp: #25D366;
             --bg: #f3f4f6;
             --card: #ffffff;
@@ -17,27 +17,24 @@
         body { 
             font-family: 'Poppins', sans-serif; 
             background-color: var(--bg); 
-            margin: 0; 
-            padding: 0;
-            padding-bottom: 90px;
+            margin: 0; padding: 0;
+            padding-bottom: 120px;
             color: var(--text);
         }
 
-        /* Header Profesional */
         header {
             background: var(--card);
-            padding: 20px;
+            padding: 25px 20px;
             text-align: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             margin-bottom: 25px;
         }
         
-        header h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: 1px; }
+        header h1 { margin: 0; font-size: 26px; font-weight: 700; color: var(--primary); }
         header p { margin: 5px 0 0; font-size: 14px; color: #6b7280; }
 
         .container { padding: 0 15px; }
 
-        /* Grid Produk */
         .katalog {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -46,201 +43,165 @@
 
         .produk { 
             background: var(--card); 
-            border-radius: 16px; 
+            border-radius: 20px; 
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            transition: transform 0.2s;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
         }
 
         .gambar-produk {
             width: 100%;
-            height: 160px;
-            background-color: #e5e7eb;
+            height: 180px;
             object-fit: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #9ca3af;
-            font-size: 12px;
+            background-color: #eee;
         }
 
-        .info-produk { padding: 15px; }
-        .info-produk h3 { font-size: 15px; margin: 0 0 8px; font-weight: 600; line-height: 1.3; }
-        .info-produk p { color: var(--primary); font-weight: 700; font-size: 16px; margin: 0 0 15px; }
+        .info-produk { padding: 15px; text-align: center; }
+        .info-produk h3 { font-size: 14px; margin: 0 0 5px; font-weight: 600; min-height: 40px; }
+        .info-produk .harga { color: var(--primary); font-weight: 700; font-size: 18px; margin-bottom: 15px; display: block; }
 
         button.tambah { 
             background: var(--text); 
-            color: white; 
-            border: none; 
-            padding: 12px; 
-            border-radius: 10px; 
-            font-weight: 600;
-            font-size: 13px;
-            width: 100%;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: background 0.3s;
+            color: white; border: none; 
+            padding: 12px; border-radius: 12px; 
+            font-weight: 600; width: 100%;
+            cursor: pointer; font-family: 'Poppins', sans-serif;
         }
 
-        /* Floating Cart (Kelihatan macam app sebenar) */
+        /* Bahagian Checkout & Postage */
         #cart { 
-            position: fixed; 
-            bottom: 15px; 
-            left: 15px; 
-            right: 15px; 
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(10px);
-            padding: 15px 20px; 
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(255,255,255,0.2);
+            position: fixed; bottom: 15px; left: 15px; right: 15px; 
+            background: rgba(255, 255, 255, 0.98); 
+            padding: 15px; border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 100;
         }
-        
-        .cart-info { display: flex; flex-direction: column; }
-        .cart-title { font-size: 12px; color: #6b7280; font-weight: 600; }
-        .jumlah-teks { font-size: 18px; font-weight: 700; color: var(--primary); }
+
+        .postage-selection {
+            display: flex; gap: 10px; margin-bottom: 12px;
+            justify-content: center; font-size: 12px;
+        }
+
+        .postage-option {
+            background: #f3f4f6; padding: 8px 12px; border-radius: 10px;
+            cursor: pointer; border: 1px solid transparent;
+        }
+
+        .postage-option.active {
+            border-color: var(--primary); background: #eff6ff; color: var(--primary); font-weight: 600;
+        }
+
+        .cart-footer { display: flex; justify-content: space-between; align-items: center; }
+        .jumlah-teks { font-size: 20px; font-weight: 700; color: var(--text); }
+        .jumlah-teks small { font-size: 12px; color: #6b7280; font-weight: 400; }
         
         button.beli {
-            background: var(--whatsapp);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-            font-family: 'Poppins', sans-serif;
+            background: var(--whatsapp); color: white; border: none;
+            padding: 12px 25px; border-radius: 15px;
+            font-weight: 700; font-size: 15px; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
         }
 
-        /* Notifikasi Cantik (Toast) */
         #toast {
-            visibility: hidden;
-            min-width: 200px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 30px;
-            padding: 12px 20px;
-            position: fixed;
-            z-index: 1;
-            left: 50%;
-            bottom: 90px;
-            transform: translateX(-50%);
-            font-size: 13px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
+            visibility: hidden; background: #333; color: #fff;
+            text-align: center; border-radius: 30px; padding: 12px 25px;
+            position: fixed; left: 50%; bottom: 140px; transform: translateX(-50%);
+            z-index: 101; font-size: 13px; opacity: 0; transition: 0.3s;
         }
-
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 100px;
-        }
+        #toast.show { visibility: visible; opacity: 1; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>Danieal Store</h1>
-        <p>Pilihan Eksklusif & Kualiti Premium</p>
+        <p>Koleksi Pakaian & Barangan Viral</p>
     </header>
     
     <div class="container">
         <div class="katalog">
             <div class="produk">
-                <img src="" alt="Kaftan Poly" class="gambar-produk" onerror="this.outerHTML='<div class=\'gambar-produk\'>[Letak Gambar Kaftan]</div>'">
+                <img src="https://i.postimg.cc/dLcpm9dX/image.jpg" alt="Kaftan Random Black" class="gambar-produk" onerror="this.src='https://via.placeholder.com/180?text=Kaftan+Black'">
                 <div class="info-produk">
-                    <h3>Kaftan Poly Lembut (Sehingga 4XL)</h3>
-                    <p>RM 45.00</p>
-                    <button class="tambah" onclick="tambahKeBakul('Kaftan Poly Lembut', 45, this)">Tambah ke Bakul</button>
+                    <h3>Kaftan Random Black</h3>
+                    <span class="harga">RM 8.30</span>
+                    <button class="tambah" onclick="tambahKeBakul('Kaftan Random Black', 8.30, this)">Tambah ke Bakul</button>
                 </div>
             </div>
 
-            <div class="produk">
-                <img src="" alt="Perfume" class="gambar-produk" onerror="this.outerHTML='<div class=\'gambar-produk\'>[Letak Gambar Perfume]</div>'">
-                <div class="info-produk">
-                    <h3>Premium Perfume (30ml)</h3>
-                    <p>RM 30.00</p>
-                    <button class="tambah" onclick="tambahKeBakul('Premium Perfume', 30, this)">Tambah ke Bakul</button>
-                </div>
             </div>
-            
-            <div class="produk">
-                <img src="" alt="Snek" class="gambar-produk" onerror="this.outerHTML='<div class=\'gambar-produk\'>[Letak Gambar Snek]</div>'">
-                <div class="info-produk">
-                    <h3>Snek Ranggup Viral</h3>
-                    <p>RM 15.00</p>
-                    <button class="tambah" onclick="tambahKeBakul('Snek Ranggup', 15, this)">Tambah ke Bakul</button>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <div id="toast">Berjaya dimasukkan ke bakul! 🛒</div>
+    <div id="toast">Produk ditambah! 🛒</div>
 
     <div id="cart">
-        <div class="cart-info">
-            <span class="cart-title">Jumlah Pesanan</span>
-            <span class="jumlah-teks">RM <span id="total">0.00</span></span>
+        <div class="postage-selection">
+            <div class="postage-option active" onclick="setPostage(8, this, 'Semenanjung')">Semenanjung (+RM8)</div>
+            <div class="postage-option" onclick="setPostage(15, this, 'Sabah/Sarawak')">Sabah/Sarawak (+RM15)</div>
         </div>
-        <button class="beli" onclick="hantarWhatsApp()">Checkout ➔</button>
+        <div class="cart-footer">
+            <div class="jumlah-teks">
+                <small>Total + Pos:</small><br>
+                RM <span id="total">0.00</span>
+            </div>
+            <button class="beli" onclick="hantarWhatsApp()">Pesan Sekarang ➔</button>
+        </div>
     </div>
 
     <script>
         let bakul = [];
-        let jumlah = 0;
+        let subtotal = 0;
+        let kosPostage = 8;
+        let kawasanPostage = "Semenanjung";
 
-        function tunjukToast(mesej) {
-            let toast = document.getElementById("toast");
-            toast.innerText = mesej;
-            toast.className = "show";
-            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2500);
+        function setPostage(harga, element, kawasan) {
+            kosPostage = harga;
+            kawasanPostage = kawasan;
+            
+            document.querySelectorAll('.postage-option').forEach(opt => opt.classList.remove('active'));
+            element.classList.add('active');
+            
+            kemaskiniPaparan();
         }
 
         function tambahKeBakul(nama, harga, btn) {
-            bakul.push("▪️ " + nama + " (RM " + harga.toFixed(2) + ")");
-            jumlah += harga;
-            document.getElementById('total').innerText = jumlah.toFixed(2);
+            bakul.push("• " + nama + " (RM" + harga.toFixed(2) + ")");
+            subtotal += harga;
+            kemaskiniPaparan();
             
-            // Effect butang
-            let teksAsal = btn.innerText;
-            btn.innerText = "✓ Tersimpan";
-            btn.style.background = "#2563eb";
-            
-            tunjukToast(nama + " ditambah! 🛒");
+            let toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = ""; }, 2000);
+        }
 
-            setTimeout(() => {
-                btn.innerText = teksAsal;
-                btn.style.background = "var(--text)";
-            }, 1500);
+        function kemaskiniPaparan() {
+            let totalKeseluruhan = subtotal > 0 ? subtotal + kosPostage : 0;
+            document.getElementById('total').innerText = totalKeseluruhan.toFixed(2);
         }
 
         function hantarWhatsApp() {
             if (bakul.length == 0) {
-                tunjukToast("Bakul anda kosong! ❌");
+                alert("Bakul anda kosong!");
                 return;
             }
             
-            let noPhone = "601137724067"; // TUKAR KEPADA NOMBOR ANDA
+            let noPhone = "601137724067"; // TUKAR KEPADA NOMBOR ANDA (MULA DENGAN 60)
+            let totalAkhir = subtotal + kosPostage;
             
-            let tajuk = "*PESANAN BARU (DANIEAL STORE)*\n";
-            let garisan = "------------------------\n";
-            let senarai = bakul.join("\n") + "\n";
-            let totalSemua = garisan + "*JUMLAH: RM " + jumlah.toFixed(2) + "*\n" + garisan;
+            let mesej = "*PESANAN BARU - DANIEAL STORE*\n" +
+                        "--------------------------------\n" +
+                        bakul.join("\n") + "\n\n" +
+                        "*Harga Barang:* RM " + subtotal.toFixed(2) + "\n" +
+                        "*Postage (" + kawasanPostage + "):* RM " + kosPostage.toFixed(2) + "\n" +
+                        "--------------------------------\n" +
+                        "*JUMLAH BESAR: RM " + totalAkhir.toFixed(2) + "*\n\n" +
+                        "Butiran Penghantaran:\n" +
+                        "Nama:\n" +
+                        "Alamat:\n" +
+                        "No Tel:";
             
-            let mesej = tajuk + garisan + senarai + totalSemua + "\nSila berikan butiran pos:\nNama:\nAlamat:\nNo Tel:";
-            
-            let url = "https://wa.me/" + noPhone + "?text=" + encodeURIComponent(mesej);
-            window.open(url);
+            window.open("https://wa.me/" + noPhone + "?text=" + encodeURIComponent(mesej));
         }
     </script>
 </body>
